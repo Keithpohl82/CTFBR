@@ -12,14 +12,27 @@ class CTFBR_API ACapturePoint : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
+
 	ACapturePoint();
 
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void SpawnFlag();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	virtual void OnBoxOverlapPlayer(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+private:
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AFlag> StartingFlag;
+	
+	class ACTFGameMode* CTFGameMode;
+
 
 public:	
 	

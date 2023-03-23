@@ -4,14 +4,22 @@
 #include "Flag.h"
 #include "Components/StaticMeshComponent.h"
 #include "CapturePoint.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 AFlag::AFlag()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+	bReplicates = true;
+	SetReplicateMovement(true);
 
 	FlagMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Flag Mesh"));
+}
+
+void AFlag::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
 }
 
 // Called when the game starts or when spawned

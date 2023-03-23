@@ -6,6 +6,17 @@
 #include "GameFramework/Actor.h"
 #include "Flag.generated.h"
 
+UENUM(BlueprintType)
+enum class EFlagState :uint8
+{
+	EFS_Home UMETA(DisplayName = "Home"),
+	EFS_Dropped UMETA(DisplayName = "Dropped"),
+	EFS_Stolen UMETA(DisplayName = "Stolen"),
+
+	EFS_DefaultMAX UMETA(DisplayName = "DefaultMAX"),
+};
+
+
 UCLASS()
 class CTFBR_API AFlag : public AActor
 {
@@ -14,6 +25,8 @@ class CTFBR_API AFlag : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AFlag();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 protected:
 	// Called when the game starts or when spawned
