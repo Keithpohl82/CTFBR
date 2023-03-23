@@ -15,10 +15,9 @@ ACapturePoint::ACapturePoint()
 	PrimaryActorTick.bCanEverTick = true;
 
 	CapturePointBase = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Capture Point Base"));
-	SetRootComponent(CapturePointBase);
 
 	OverlapBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Overlap Box"));
-	OverlapBox->SetupAttachment(RootComponent);
+	SetRootComponent(OverlapBox);
 
 }
 
@@ -34,10 +33,23 @@ void ACapturePoint::BeginPlay()
 
 void ACapturePoint::OnBoxOverlapPlayer(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	ATP_ThirdPersonCharacter* Player = Cast<ATP_ThirdPersonCharacter>(OtherActor);
-	if (Player)
+	PlayerCharacter = Cast<ATP_ThirdPersonCharacter>(OtherActor);
+	if (PlayerCharacter)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Overlapped with Player"));
+		AttachFlagToPlayer(FlagInPlay);
+	}
+}
+
+void ACapturePoint::AttachFlagToPlayer(class AFlag* FlagToAttach)
+{
+	//FlagToAttach = FlagInPlay;
+	
+	if (FlagToAttach->FlagState == EFlagState::EFS_Home)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AttachFlag called!!"));
+		
+		FlagToAttach->AttachToActor(PlayerCharacter, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	}
 }
 
@@ -53,12 +65,10 @@ void ACapturePoint::SpawnFlag()
 
 	UWorld* World = GetWorld();
 	
-
-
 	if (CTFGameMode && StartingFlag && World)
 	{
 		AFlag* FlagToSpawn = World->SpawnActor<AFlag>(StartingFlag, GetActorTransform());
-		
+		FlagInPlay = FlagToSpawn;
 	}
 }
 
