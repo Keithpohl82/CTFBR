@@ -50,6 +50,7 @@ void ACapturePoint::AttachFlagToPlayer(class AFlag* FlagToAttach)
 		UE_LOG(LogTemp, Warning, TEXT("AttachFlag called!!"));
 		
 		FlagToAttach->AttachToActor(PlayerCharacter, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+		FlagToAttach->SetOwner(PlayerCharacter);
 	}
 }
 

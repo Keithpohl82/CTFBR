@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "CTFBR/TypeClasses/Teams.h"
+
 #include "CapturePoint.generated.h"
 
 UCLASS()
@@ -30,6 +32,9 @@ protected:
 
 
 private:
+
+	UPROPERTY(EditAnywhere)
+	ETeam Team;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AFlag> StartingFlag;
