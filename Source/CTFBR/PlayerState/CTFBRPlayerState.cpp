@@ -3,3 +3,7 @@
 
 #include "CTFBRPlayerState.h"
 
+void ACTFBRPlayerState::SetTeam(ETeam TeamToSet)
+{
+	Team = TeamToSet;
+}

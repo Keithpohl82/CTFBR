@@ -7,6 +7,7 @@
 #include "Flag.h"
 #include "CTFBR/TP_ThirdPerson/TP_ThirdPersonCharacter.h"
 #include "CTFBR/GameMode/CTFGameMode.h"
+#include "CTFBR/PlayerState/CTFBRPlayerState.h"
 
 
 ACapturePoint::ACapturePoint()
@@ -34,7 +35,8 @@ void ACapturePoint::BeginPlay()
 void ACapturePoint::OnBoxOverlapPlayer(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	PlayerCharacter = Cast<ATP_ThirdPersonCharacter>(OtherActor);
-	if (PlayerCharacter)
+	
+	if (PlayerCharacter && PlayerCharacter->GetTeam() == Team)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Overlapped with Player"));
 		AttachFlagToPlayer(FlagInPlay);

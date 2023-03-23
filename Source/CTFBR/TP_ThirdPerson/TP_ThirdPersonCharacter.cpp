@@ -9,6 +9,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "CTFBR/PlayerState/CTFBRPlayerState.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -64,6 +65,13 @@ void ATP_ThirdPersonCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+}
+
+ETeam ATP_ThirdPersonCharacter::GetTeam()
+{
+	CharacterPlayerState = CharacterPlayerState == nullptr ? GetPlayerState<ACTFBRPlayerState>() : CharacterPlayerState;
+	if (CharacterPlayerState == nullptr) return ETeam::ET_Spectator;
+	return CharacterPlayerState->GetTeam();
 }
 
 //////////////////////////////////////////////////////////////////////////

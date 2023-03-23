@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "CTFBR/TypeClasses/Teams.h"
+
 #include "TP_ThirdPersonCharacter.generated.h"
 
 
@@ -57,10 +59,18 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay();
 
+private:
+
+	UPROPERTY()
+	class ACTFBRPlayerState* CharacterPlayerState;
+
 public:
+
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	ETeam GetTeam();
 };
 
