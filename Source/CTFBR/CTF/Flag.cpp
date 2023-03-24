@@ -46,9 +46,11 @@ void AFlag::OnFlagOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Othe
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Flag Overlapped with Player"));
 		AttachFlagToPlayer(PlayerCharacter);
+		PlayerCharacter->bHasFlag = true;
 	}
 	else
 	{
+		// This may change in the future to return flag to base if "stolen/dropped"
 		UE_LOG(LogTemp, Warning, TEXT("You can not pick up your own flag."));
 	}
 }

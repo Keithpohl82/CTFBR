@@ -42,6 +42,7 @@ class ATP_ThirdPersonCharacter : public ACharacter
 public:
 	ATP_ThirdPersonCharacter();
 	
+	bool bHasFlag = false;
 
 protected:
 
@@ -58,6 +59,8 @@ protected:
 	
 	// To add mapping context
 	virtual void BeginPlay();
+
+	
 
 private:
 

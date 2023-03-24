@@ -63,7 +63,7 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	class UBoxComponent* OverlapBox;
 
-	ETeam GetTeam();
+	FORCEINLINE ETeam GetTeam() const { return Team; }
 
 	void SetTeam(ETeam TeamToSet);
 };
