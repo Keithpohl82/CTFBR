@@ -29,31 +29,6 @@ void ACapturePoint::BeginPlay()
 	
 	SpawnFlag();
 
-	OverlapBox->OnComponentBeginOverlap.AddDynamic(this, &ACapturePoint::OnBoxOverlapPlayer);
-}
-
-void ACapturePoint::OnBoxOverlapPlayer(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	PlayerCharacter = Cast<ATP_ThirdPersonCharacter>(OtherActor);
-	
-	if (PlayerCharacter && PlayerCharacter->GetTeam() == Team)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Overlapped with Player"));
-		AttachFlagToPlayer(FlagInPlay);
-	}
-}
-
-void ACapturePoint::AttachFlagToPlayer(class AFlag* FlagToAttach)
-{
-	//FlagToAttach = FlagInPlay;
-	
-	if (FlagToAttach->FlagState == EFlagState::EFS_Home)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AttachFlag called!!"));
-		
-		FlagToAttach->AttachToActor(PlayerCharacter, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-		FlagToAttach->SetOwner(PlayerCharacter);
-	}
 }
 
 void ACapturePoint::Tick(float DeltaTime)
@@ -71,7 +46,7 @@ void ACapturePoint::SpawnFlag()
 	if (CTFGameMode && StartingFlag && World)
 	{
 		AFlag* FlagToSpawn = World->SpawnActor<AFlag>(StartingFlag, GetActorTransform());
-		FlagInPlay = FlagToSpawn;
+		FlagToSpawn->SetTeam(Team);
 	}
 }
 

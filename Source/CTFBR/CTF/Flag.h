@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "CTFBR/TypeClasses/Teams.h"
+
 #include "Flag.generated.h"
 
 UENUM(BlueprintType)
@@ -35,8 +37,20 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	virtual void OnFlagOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	void AttachFlagToPlayer(class ATP_ThirdPersonCharacter* Player);
+
+
 private:
 
+	UPROPERTY(VisibleAnywhere)
+	ETeam Team;
+
+	class ATP_ThirdPersonCharacter* PlayerCharacter;
+
+	class ACTFGameMode* CTFGameMode;
 
 
 public:	
@@ -45,4 +59,11 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	class UStaticMeshComponent* FlagMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	class UBoxComponent* OverlapBox;
+
+	ETeam GetTeam();
+
+	void SetTeam(ETeam TeamToSet);
 };
