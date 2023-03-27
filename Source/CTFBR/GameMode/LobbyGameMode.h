@@ -17,5 +17,8 @@ class CTFBR_API ALobbyGameMode : public AGameModeBase
 
 public:
 	
+	UPROPERTY(BlueprintReadOnly)
+	int32 NumberOfPlayers;
+
 	virtual void PostLogin(APlayerController* NewPlayer) override;
 };
