@@ -17,5 +17,18 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
+	if (MasterCharacter == nullptr)
+	{
+		MasterCharacter = Cast<AMasterCharacter>(TryGetPawnOwner());
+	}
+	if (MasterCharacter == nullptr) return;
+
+	FVector Velocity = MasterCharacter->GetVelocity();
+	Velocity.Z = 0.f;
+	Speed = Velocity.Size();
+
+	bIsInAir = MasterCharacter->GetCharacterMovement()->IsFalling();
+
+	bIsAccelerating = MasterCharacter->GetCharacterMovement()->GetCurrentAcceleration().Size() > 0.f ? true : false;
 
 }
