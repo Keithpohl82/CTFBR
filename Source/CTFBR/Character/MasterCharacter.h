@@ -42,6 +42,11 @@ public:
 	// Sets default values for this character's properties
 	AMasterCharacter();
 
+private:
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UWidgetComponent* OverheadWidget;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
