@@ -5,6 +5,7 @@
 #include "Components/TextBlock.h"
 #include "CTFBR/PlayerState/CTFBRPlayerState.h"
 #include "GameFramework/PlayerState.h"
+#include "CTFBR/Character/MasterCharacter.h"
 
 void UOverheadWidget::SetDisplayText(FString TextToDisplay)
 {
@@ -46,8 +47,15 @@ void UOverheadWidget::ShowPlayerNetRole(APawn* InPawn)
 
 void UOverheadWidget::ShowPlayerName(APawn* InPawn)
 {
-	FString PlayerName = InPawn->GetPlayerState()->GetPlayerName();
-	SetDisplayText(PlayerName);
+	APlayerState* PlayerState = InPawn->GetPlayerState();
+
+	FString PlayerName = FString("");
+	if (PlayerState)
+	{
+		PlayerName = PlayerState->GetPlayerName();
+		SetDisplayText(PlayerName);
+	}
+	
 }
 
 void UOverheadWidget::NativeDestruct()

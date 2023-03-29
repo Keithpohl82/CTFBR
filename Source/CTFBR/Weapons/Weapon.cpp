@@ -63,7 +63,11 @@ void AWeapon::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* 
 
 void AWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-
+	AMasterCharacter* Character = Cast<AMasterCharacter>(OtherActor);
+	if (Character)
+	{
+		Character->SetOverlappingWeapon(nullptr);
+	}
 }
 
 // Called every frame
