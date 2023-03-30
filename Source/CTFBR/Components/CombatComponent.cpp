@@ -3,6 +3,7 @@
 
 #include "CombatComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
+#include "Components/SphereComponent.h"
 #include "CTFBR/Weapons/Weapon.h"
 #include "CTFBR/Character/MasterCharacter.h"
 
@@ -35,7 +36,7 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 		HandRSocket->AttachActor(EquippedWeapon, MasterCharacter->GetMesh());
 	}
 	EquippedWeapon->SetOwner(MasterCharacter);
-	EquippedWeapon->ShowPickupWidget(false);
+	
 }
 
 void UCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

@@ -99,6 +99,26 @@ void AMasterCharacter::OnRep_OverlappingWeapon(AWeapon* LastWeapon)
 	}
 }
 
+void AMasterCharacter::ServerEquipButtonPressed_Implementation()
+{
+	if (CombatComponent)
+	{
+		CombatComponent->EquipWeapon(OverlappingWeapon);
+	}
+}
+
+void AMasterCharacter::EquipButtonPressed()
+{
+	if (HasAuthority())
+	{
+		CombatComponent->EquipWeapon(OverlappingWeapon);
+	}
+	else
+	{
+		ServerEquipButtonPressed();
+	}
+}
+
 // Called when the game starts or when spawned
 void AMasterCharacter::BeginPlay()
 {
@@ -147,15 +167,6 @@ void AMasterCharacter::Look(const FInputActionValue& Value)
 		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
-	}
-}
-
-
-void AMasterCharacter::EquipButtonPressed()
-{
-	if (CombatComponent && HasAuthority())
-	{
-		CombatComponent->EquipWeapon(OverlappingWeapon);
 	}
 }
 

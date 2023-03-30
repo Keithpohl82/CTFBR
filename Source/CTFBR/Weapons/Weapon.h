@@ -42,7 +42,7 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "WeaponProperties")
 	class UWidgetComponent* PickupWidget;
 
-	UPROPERTY(VisibleAnywhere, Category = "WeaponProperties")
+	UPROPERTY(ReplicatedUsing = OnRep_WeaponState, VisibleAnywhere, Category = "WeaponProperties")
 	EWeaponState WeaponState;
 
 protected:
@@ -55,9 +55,13 @@ protected:
 	UFUNCTION()
 	void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	UFUNCTION()
+	void OnRep_WeaponState();
+
 
 public:	
+	
+	void SetWeaponState(EWeaponState State);
+	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }
 	FORCEINLINE UWidgetComponent* GetPickupWidget() const { return PickupWidget; }
-	FORCEINLINE void SetWeaponState(EWeaponState State) { WeaponState = State; }
-
 };
