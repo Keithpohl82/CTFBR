@@ -36,6 +36,9 @@ class CTFBR_API AMasterCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* LookAction;
 
+	/** Look Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* PickupAction;
 
 
 public:
@@ -43,6 +46,7 @@ public:
 	AMasterCharacter();
 	virtual void Tick(float DeltaTime) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void PostInitializeComponents() override;
 
 private:
 
@@ -55,6 +59,9 @@ private:
 	UFUNCTION()
 	void OnRep_OverlappingWeapon(AWeapon* LastWeapon);
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	class UCombatComponent* CombatComponent;
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -65,11 +72,14 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
+	/** Called for Equip input */
+	void EquipButtonPressed();
+
 public:	
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void SetOverlappingWeapon(AWeapon* Weapon);
 
-
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	FORCEINLINE UCombatComponent* GetCombat() const { return CombatComponent; }
 
 };

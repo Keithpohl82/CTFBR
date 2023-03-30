@@ -58,6 +58,6 @@ protected:
 
 public:	
 	FORCEINLINE UWidgetComponent* GetPickupWidget() const { return PickupWidget; }
-	
+	FORCEINLINE void SetWeaponState(EWeaponState State) { WeaponState = State; }
 
 };

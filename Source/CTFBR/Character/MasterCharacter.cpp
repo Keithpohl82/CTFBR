@@ -13,6 +13,7 @@
 #include "GameFramework/Controller.h"
 #include "Net/UnrealNetwork.h"
 #include "CTFBR/Weapons/Weapon.h"
+#include "CTFBR/Components/CombatComponent.h"
 
 // Sets default values
 AMasterCharacter::AMasterCharacter()
@@ -56,6 +57,9 @@ AMasterCharacter::AMasterCharacter()
 	OverheadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("Overhead widget"));
 	OverheadWidget->SetupAttachment(RootComponent);
 
+	CombatComponent = CreateDefaultSubobject<UCombatComponent>(TEXT("Combat Component"));
+	CombatComponent->SetIsReplicated(true);
+
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
@@ -71,6 +75,16 @@ void AMasterCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME_CONDITION(AMasterCharacter, OverlappingWeapon, COND_OwnerOnly);
+}
+
+void AMasterCharacter::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	if (CombatComponent)
+	{
+		CombatComponent->MasterCharacter = this;
+	}
 }
 
 void AMasterCharacter::OnRep_OverlappingWeapon(AWeapon* LastWeapon)
@@ -137,6 +151,14 @@ void AMasterCharacter::Look(const FInputActionValue& Value)
 }
 
 
+void AMasterCharacter::EquipButtonPressed()
+{
+	if (CombatComponent && HasAuthority())
+	{
+		CombatComponent->EquipWeapon(OverlappingWeapon);
+	}
+}
+
 void AMasterCharacter::SetOverlappingWeapon(AWeapon* Weapon)
 {
 	if (OverlappingWeapon)
@@ -171,6 +193,8 @@ void AMasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMasterCharacter::Look);
+
+		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Triggered, this, &AMasterCharacter::EquipButtonPressed);
 
 	}
 }
