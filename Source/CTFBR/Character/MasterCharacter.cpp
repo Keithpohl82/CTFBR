@@ -187,6 +187,11 @@ void AMasterCharacter::SetOverlappingWeapon(AWeapon* Weapon)
 	}
 }
 
+bool AMasterCharacter::IsWeaponEquipped()
+{
+	return (CombatComponent && CombatComponent->EquippedWeapon);
+}
+
 // Called to bind functionality to input
 void AMasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {

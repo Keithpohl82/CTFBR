@@ -83,6 +83,8 @@ public:
 
 	void SetOverlappingWeapon(AWeapon* Weapon);
 
+	bool IsWeaponEquipped();
+
 	FORCEINLINE UCombatComponent* GetCombat() const { return CombatComponent; }
 
 };

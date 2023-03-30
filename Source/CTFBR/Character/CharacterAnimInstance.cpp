@@ -4,6 +4,7 @@
 #include "CharacterAnimInstance.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+
 #include "CTFBR/Character/MasterCharacter.h"
 
 void UCharacterAnimInstance::NativeInitializeAnimation()
@@ -31,4 +32,5 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	bIsAccelerating = MasterCharacter->GetCharacterMovement()->GetCurrentAcceleration().Size() > 0.f ? true : false;
 
+	bWeaponEquipped = MasterCharacter->IsWeaponEquipped();
 }
