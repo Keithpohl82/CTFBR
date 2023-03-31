@@ -36,10 +36,25 @@ class CTFBR_API AMasterCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* LookAction;
 
-	/** Look Input Action */
+	/** Pickup Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* PickupAction;
 
+	/** Crouch Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* CrouchAction;
+
+	/** Crouch Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* UnCrouchAction;
+
+	/** Aim Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* AimAction;
+
+	/** StopAim Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* StopAimAction;
 
 public:
 
@@ -65,6 +80,8 @@ private:
 	UFUNCTION(Server, Reliable)
 	void ServerEquipButtonPressed();
 
+
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -77,6 +94,17 @@ protected:
 
 	/** Called for Equip input */
 	void EquipButtonPressed();
+
+	/** Called for Crouch input */
+	void CrouchPressed();
+
+	/** Called for UnCrouch input */
+	void CrouchReleased();
+
+	/** Called for Aim input */
+	void AimButtonPressed();
+
+	void AimButtonReleased();
 
 public:	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

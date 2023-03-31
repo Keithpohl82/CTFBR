@@ -21,6 +21,7 @@ AMasterCharacter::AMasterCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
 
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -105,6 +106,28 @@ void AMasterCharacter::ServerEquipButtonPressed_Implementation()
 	{
 		CombatComponent->EquipWeapon(OverlappingWeapon);
 	}
+}
+
+void AMasterCharacter::CrouchPressed()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Crouch Pressed"));
+	Crouch();
+}
+
+void AMasterCharacter::CrouchReleased()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Crouch Released"));
+	UnCrouch();
+}
+
+void AMasterCharacter::AimButtonPressed()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Aim Pressed"));
+}
+
+void AMasterCharacter::AimButtonReleased()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Aim Released"));
 }
 
 void AMasterCharacter::EquipButtonPressed()
@@ -212,6 +235,11 @@ void AMasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Triggered, this, &AMasterCharacter::EquipButtonPressed);
 
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &AMasterCharacter::CrouchPressed);
+		EnhancedInputComponent->BindAction(UnCrouchAction, ETriggerEvent::Completed, this, &AMasterCharacter::CrouchReleased);
+
+		EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &AMasterCharacter::AimButtonPressed);
+		EnhancedInputComponent->BindAction(StopAimAction, ETriggerEvent::Completed, this, &AMasterCharacter::AimButtonReleased);
 	}
 }
 
