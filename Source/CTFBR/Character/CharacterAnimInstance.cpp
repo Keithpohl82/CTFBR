@@ -35,4 +35,6 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	bWeaponEquipped = MasterCharacter->IsWeaponEquipped();
 
 	bIsCrouched = MasterCharacter->bIsCrouched;
+
+	bAiming = MasterCharacter->IsAiming();
 }

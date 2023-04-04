@@ -122,12 +122,18 @@ void AMasterCharacter::CrouchReleased()
 
 void AMasterCharacter::AimButtonPressed()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Aim Pressed"));
+	if (CombatComponent)
+	{
+		CombatComponent->bAiming = true;
+	}
 }
 
 void AMasterCharacter::AimButtonReleased()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Aim Released"));
+	if (CombatComponent)
+	{
+		CombatComponent->bAiming = false;
+	}
 }
 
 void AMasterCharacter::EquipButtonPressed()
@@ -213,6 +219,11 @@ void AMasterCharacter::SetOverlappingWeapon(AWeapon* Weapon)
 bool AMasterCharacter::IsWeaponEquipped()
 {
 	return (CombatComponent && CombatComponent->EquippedWeapon);
+}
+
+bool AMasterCharacter::IsAiming()
+{
+	return (CombatComponent && CombatComponent->bAiming);
 }
 
 // Called to bind functionality to input
